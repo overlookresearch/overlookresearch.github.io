@@ -9,7 +9,7 @@ input {-webkit-appearance: none;-moz-appearance: none;white-space: pre;padding:0
 input, input::-webkit-input-placeholder,input::-moz-placeholder {font-family:Helvetica, Arial, sans-serif;}
 html, body {line-height:1;height:100%;font-size:16pt;letter-spacing:1px;text-align:center;font-weight:200;background:#fff;color:RGBA(0,0,0,0.7);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;}
 .top {font-size:80pt;margin-left:-0.5em;padding-right:0.5em;padding-top:0.5em;width:100%;text-align:center;font-family:"Baskerville", "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;color:#000;line-height: 1.05em}
-.tag {padding-left:4em;margin-top:-1.5em;font-size:26px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;}
+.tag {padding-left:4.0em;margin-top:-1.5em;font-size:25.8px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;}
 .center {margin:0 auto;position:relative;width:600px;height:450px;}
 .or {margin-left:0.9em;padding-left:0.8em;padding-bottom:0em;border-bottom: 4px solid RGBA(0,0,0,0.7);}
 form {margin:1em auto 1em auto;width:600px;}
@@ -19,6 +19,7 @@ input#submitbutton {font-size:14pt;padding:11px;padding-top:13px;background-colo
 .show {height:100%;width:100%;-webkit-transition:opacity 0.25s ease-in;transition:opacity 0.25s ease-in;opacity:1;}
 .hide {height:100%;width:100%;-webkit-transition:opacity 0.5s ease-in;transition:opacity 0.5s ease-in;opacity:0;}
 .footer {position:fixed;bottom:1em;width:100%;font-size:12pt;text-align:center;line-height: 1.5em;}
+.dummy {display:none;}
     </style>
     <meta name="viewport" content="initial-scale=0.5, width=device-width, height=device-height, minimum-scale=0.5, maximum-scale=0.5, user-scalable=no, target-densitydpi=device-dpi" />
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +37,7 @@ input#submitbutton {font-size:14pt;padding:11px;padding-top:13px;background-colo
       <form>
         <input class="round" id="email" type="text" placeholder="Curious?" maxLength=50 /><input class="round" type="submit" id="submitbutton" value="Submit" />
       </form>
+      <img id="dummy" class="dummy" />
     </div>
     <div class="footer">
     We are hiring designers and js developers.<br />If interested, send a resume or portfolio link to <a href="mailto:hiring@overlookresearch.com">hiring@overlookresearch.com</a><br />
@@ -43,7 +45,6 @@ input#submitbutton {font-size:14pt;padding:11px;padding-top:13px;background-colo
     </div>
   </body>
   <script>
-
 
   var mts = ["./images/mt1.jpg",
                "./images/mt2.jpg",
@@ -66,12 +67,18 @@ input#submitbutton {font-size:14pt;padding:11px;padding-top:13px;background-colo
       setTimeout(function() {nextImage();},1000);
     }
 
+    function show(e) {
+      var imEl = document.getElementById("image");
+      imEl.style.background = "url('"+e.target.src+"')"+" center center / contain no-repeat";
+      imEl.className = "show";
+      setTimeout(function() {hide();},6000);
+    }
+
     function nextImage() {
       var idx = (Math.random()*mts.length)|0;
-      var el = document.getElementById("image");
-      el.style.background = "url('"+mts[idx]+"') center center / contain no-repeat";
-      el.className = "show";
-      setTimeout(function() {hide();},6000);
+      var el = document.getElementById("dummy");
+      el.src = "";
+      el.src = mts[idx];
     }
 
     document.getElementById('submitbutton').onclick = saveEmail;
@@ -97,6 +104,7 @@ input#submitbutton {font-size:14pt;padding:11px;padding-top:13px;background-colo
       return false;
     }
 
+    document.getElementById("dummy").addEventListener("load", show);
     setTimeout(nextImage, 10);
   </script>
   <script>
